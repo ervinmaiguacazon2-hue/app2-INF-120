@@ -1,0 +1,29 @@
+# Directorios generados por Lazarus
+lib/
+backup/
+bin/
+
+# Archivos de sesión del proyecto (estado local del IDE)
+*.lps
+*.compiled
+
+# Archivos compilados (Free Pascal)
+*.o
+*.ppu
+*.obj
+*.or
+*.a
+
+# Archivos ejecutables y librerías dinámicas (Windows, Linux, macOS)
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Archivos de información de depuración
+*.dbg
+*.psym
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
