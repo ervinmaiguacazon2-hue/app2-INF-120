@@ -28,7 +28,7 @@ const
         procedure intercambio(a,b:integer);
         procedure qsort(izq,der:integer);
         function frec(ele:integer):integer;
-        //faltantes
+        //APLICAION 2
         function busqBinaria(ele:integer):integer; //
         procedure ordrinter();//
         procedure invertir();//
@@ -40,7 +40,22 @@ const
         procedure ordqsort();//
         procedure elimR();//
         procedure ordfrec();//
-        function comostring():string;
+        function comostring():string;//
+        //APLICACION 4
+        function tosstring():String;
+        procedure cargar();
+        procedure mostrar();
+        procedure dividir(var a,b:TVector);
+        procedure purga();
+        function canCortes():integer;
+        function canELE():string;
+        function intercalar(v2:TVector):String;
+
+        //PRACTICAS
+        function escapicua():boolean;
+        function moda():integer;
+        function promedio():real;
+        procedure fibonacci(n:integer);
     end;
 
 implementation
@@ -78,7 +93,7 @@ end;
 
 procedure TVector.setdim(dimen: integer);
 begin
- if(dimen>=1)and(dimen<=MAX)then
+ if(dimen>=0)and(dimen<=MAX)then
    dim:=dimen
  else
    ShowMessage('dimencion fuera de rango');
@@ -357,9 +372,9 @@ begin
   begin
     for j:=1 to dim-i do
     begin
-      freqJ  := frec(elem[j]);
-      freqJ1 := frec(elem[j+1]);
-      if (freqJ < freqJ1) or ((freqJ=freqJ1)and(elem[j]>elem[j+1]))then
+      freqJ:=frec(elem[j]);
+      freqJ1:=frec(elem[j+1]);
+      if (freqJ<freqJ1)or((freqJ=freqJ1)and(elem[j]>elem[j+1]))then
       begin
         intercambio(j,j+1);
       end;
@@ -381,6 +396,232 @@ begin
   end;
   s:=s+']';
   Result:=s;
+end;
+
+function TVector.tosstring(): String;
+var
+  d:integer;
+  cad:string;
+begin
+ cad:='[';
+ for d:=1 to dim-1 do
+ cad:=cad+IntToStr(elem[d])+',';
+ cad:=cad+IntToStr(elem[dim])+']';
+ Result:=cad;
+end;
+
+procedure TVector.cargar();
+var
+  p:integer;
+begin
+
+ dim:=StrToInt(InputBox('cargar vector','dimencion:',''));
+  for p:=1 to dim do
+   elem[p]:=StrToInt(InputBox('cargar vector','v['+IntToStr(p)+']=',''));
+end;
+
+procedure TVector.mostrar();
+begin
+ ShowMessage(tosstring());
+end;
+
+procedure TVector.dividir(var a, b: TVector);
+var
+  i:integer;
+begin
+ i:=1;
+ A.setdim(0);
+ B.setdim(0);
+ while(i<=dim)do
+  begin
+    if(elem[i] mod 2=0)then
+     A.addelem(elem[i])
+     else
+       B.addelem(elem[i]);
+    inc(i);
+  end;
+end;
+
+procedure TVector.purga();
+var
+  p,d:integer;
+begin
+ p:=1;
+ while(p<=dim)do
+  begin
+    d:=p+1;
+    while(d<=dim)do
+     begin
+     if(elem[p]=elem[d])then
+      remelem(d)
+     else
+      inc(d);
+     end;
+  inc(p);
+  end;
+end;
+
+function TVector.canCortes(): integer;
+var
+  p,c:integer;
+begin
+ c:=0;
+ for p:=1 to dim-1 do
+ begin
+  if elem[p]<>elem[p+1]then
+  inc(c);
+ end;
+ Result:=c;
+end;
+
+//[cantidad 1er ele, catidad 2do ele,.....cantidad n ele]
+function TVector.canELE(): string;
+var
+  p,d,c:integer;
+  s:string;
+  b:boolean;
+begin
+ s:='[';
+ b:=true;
+ if dim>0 then
+ begin
+   d:=1;
+   while d<=dim do
+    begin
+      p:=elem[d];
+      c:=0;
+      while(d<=dim)and(elem[d]=p)do
+       begin
+        inc(c);
+        inc(d);
+       end;
+      if not b then
+       s:=s+',';
+      s:=s+IntToStr(c);
+      b:=false;
+    end;
+ end;
+ s:=s+']';
+ Result:=s;
+end;
+
+function TVector.intercalar(v2: TVector): String;
+var
+  i:integer;
+  s:String;
+  b:Boolean;
+begin
+ s:='[';
+ b:=true;
+ i:=1;
+ while(i<=dim)or(i<=v2.getdim())do
+  begin
+   if i<=dim then
+   begin
+     if not b then
+      s:=s+',';
+     s:=s+IntToStr(elem[i]);
+     b:=false;
+   end;
+   if i<=v2.getdim() then
+   begin
+     s:=s+',';
+     s:=s+IntToStr(v2.getelem(i));
+     b:=false;
+   end;
+   inc(i);
+  end;
+  s:=s+']';
+  Result:=s;
+end;
+
+function TVector.escapicua(): boolean;
+var
+  i:integer;
+  b:boolean;
+begin
+  b:=true;
+  i:=1;
+  while(i<=dim div 2)and b do
+  begin
+   if elem[i]<>elem[dim-i+1] then
+    b:=false
+   else
+    inc(i);
+  end;
+  result:=b;
+end;
+
+function TVector.moda(): integer;
+var
+  i,maxf,elemod,frea:integer;
+begin
+  if dim>0 then
+  begin
+    maxf:=0;
+    elemod:=elem[1];
+    for i:=1 to dim do
+    begin
+     frea:=frec(elem[i]);
+     if frea>maxf then
+     begin
+       maxf:=frea;
+       elemod:=elem[i];
+     end;
+    end;
+    result:=elemod;
+  end
+  else
+  begin
+   ShowMessage('vector vacio');
+   result:=-1;
+  end;
+end;
+
+function TVector.promedio(): real;
+var
+  i:integer;
+  s:real;
+begin
+  if dim>0 then
+  begin
+    s:=0;
+    for i:=1 to dim do
+    begin
+     s:=s+elem[i];
+    end;
+    result:=s/dim;
+  end
+ else
+ begin
+  ShowMessage('vector vacio');
+  result:=-1;
+ end;
+end;
+
+procedure TVector.fibonacci(n: integer);
+var
+  i,a,b,c:integer;
+begin
+ if(n>=1)and(n<=MAX)then
+ begin
+   dim:=0;
+   if n>=1 then
+   addelem(0);
+   if n>=2 then
+   addelem(1);
+   a:=0;
+   b:=1;
+   for i:=3 to n do
+   begin
+    c:=a+b;
+    addelem(c);
+    a:=b;
+    b:=c;
+   end;
+ end
+ else
+  ShowMessage('dimencion fuera de rango');
 end;
 
 end.
