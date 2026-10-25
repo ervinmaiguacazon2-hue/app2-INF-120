@@ -26,7 +26,19 @@ type
     Button2: TButton;
     Button20: TButton;
     Button21: TButton;
+<<<<<<< HEAD
+=======
+    Button22: TButton;
+    Button23: TButton;
+    Button24: TButton;
+    Button25: TButton;
+    Button26: TButton;
+    Button27: TButton;
+    Button28: TButton;
+    Button29: TButton;
+>>>>>>> c3c558257cbd9cdaee88615d36bdbfaedb1b0866
     Button3: TButton;
+    Button30: TButton;
     Button4: TButton;
     Button5: TButton;
     Button6: TButton;
@@ -36,7 +48,10 @@ type
     Edit1: TEdit;
     Edit2: TEdit;
     Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
     StringGrid1: TStringGrid;
+    StringGrid2: TStringGrid;
     procedure Button10Click(Sender: TObject);
     procedure Button11Click(Sender: TObject);
     procedure Button12Click(Sender: TObject);
@@ -50,7 +65,19 @@ type
     procedure Button1Click(Sender: TObject);
     procedure Button20Click(Sender: TObject);
     procedure Button21Click(Sender: TObject);
+<<<<<<< HEAD
+=======
+    procedure Button22Click(Sender: TObject);
+    procedure Button23Click(Sender: TObject);
+    procedure Button24Click(Sender: TObject);
+    procedure Button25Click(Sender: TObject);
+    procedure Button26Click(Sender: TObject);
+    procedure Button27Click(Sender: TObject);
+    procedure Button28Click(Sender: TObject);
+    procedure Button29Click(Sender: TObject);
+>>>>>>> c3c558257cbd9cdaee88615d36bdbfaedb1b0866
     procedure Button2Click(Sender: TObject);
+    procedure Button30Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
@@ -59,8 +86,9 @@ type
     procedure Button8Click(Sender: TObject);
     procedure Button9Click(Sender: TObject);
   private
-   v:TVector;
+   v,v1,a,b:TVector;
    procedure updateSG();
+   procedure updateSG2();
   public
 
   end;
@@ -78,6 +106,12 @@ procedure TForm1.Button2Click(Sender: TObject);
 begin
  v.setdim(StrToInt(Edit1.Text));
   updateSG();
+end;
+
+procedure TForm1.Button30Click(Sender: TObject);
+begin
+  v1.mostrar();
+  updateSG2();
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);
@@ -133,6 +167,9 @@ end;
 procedure TForm1.Button1Click(Sender: TObject);
 begin
  v:=Tvector.crear();
+ a:=TVector.crear();
+ b:=TVector.crear();
+ v1:=TVector.crear();
   updateSG();
   ShowMessage('vector inicializado');
 end;
@@ -156,6 +193,58 @@ begin
  ShowMessage('inicializa el vector');
 end;
 
+<<<<<<< HEAD
+=======
+procedure TForm1.Button22Click(Sender: TObject);
+begin
+  Edit1.Text:=IntToStr(v.canCortes());
+end;
+
+procedure TForm1.Button23Click(Sender: TObject);
+begin
+  Edit1.Text:=v.canELE();
+end;
+
+procedure TForm1.Button24Click(Sender: TObject);
+begin
+ v.dividir(a,b);
+  Edit1.Text:='A='+a.tosstring();
+  Edit2.Text:='B='+b.tosstring();
+end;
+
+procedure TForm1.Button25Click(Sender: TObject);
+begin
+  if Assigned(v) and Assigned(v1)then
+    begin
+      Edit1.Text:=v.intercalar(v1);
+    end
+  else
+  ShowMessage('inicializa ambos vectores');
+end;
+
+procedure TForm1.Button26Click(Sender: TObject);
+begin
+  v.purga();
+  updateSG();
+end;
+
+procedure TForm1.Button27Click(Sender: TObject);
+begin
+ v.cargar();
+end;
+
+procedure TForm1.Button28Click(Sender: TObject);
+begin
+ v.mostrar();
+ updateSG();
+end;
+
+procedure TForm1.Button29Click(Sender: TObject);
+begin
+  v1.cargar();
+end;
+
+>>>>>>> c3c558257cbd9cdaee88615d36bdbfaedb1b0866
 procedure TForm1.Button10Click(Sender: TObject);
 begin
   v.ordrinter();
@@ -228,6 +317,15 @@ begin
 StringGrid1.ColCount:=v.getdim();
   for des:=1 to v.getdim() do
    StringGrid1.Cells[des-1,0]:=IntToStr(v.getelem(des));
+end;
+
+procedure TForm1.updateSG2();
+var
+  des:integer;
+begin
+StringGrid2.ColCount:=v1.getdim();
+  for des:=1 to v1.getdim() do
+   StringGrid2.Cells[des-1,0]:=IntToStr(v1.getelem(des));
 end;
 
 end.
