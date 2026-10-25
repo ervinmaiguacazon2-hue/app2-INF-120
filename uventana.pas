@@ -25,6 +25,7 @@ type
     Button19: TButton;
     Button2: TButton;
     Button20: TButton;
+    Button21: TButton;
     Button3: TButton;
     Button4: TButton;
     Button5: TButton;
@@ -48,6 +49,7 @@ type
     procedure Button19Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button20Click(Sender: TObject);
+    procedure Button21Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
@@ -141,6 +143,17 @@ begin
     ShowMessage('Contenido del vector: ' + v.ComoString())
   else
     ShowMessage('El vector no ha sido creado.');
+end;
+
+procedure TForm1.Button21Click(Sender: TObject);
+begin
+ if Assigned(v)then
+   begin
+     v.fibonacci(StrToInt(Edit1.Text));
+     updateSG();
+   end
+ else
+ ShowMessage('inicializa el vector');
 end;
 
 procedure TForm1.Button10Click(Sender: TObject);

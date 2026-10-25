@@ -41,6 +41,10 @@ const
         procedure elimR();//
         procedure ordfrec();//
         function comostring():string;
+        function escapicua():boolean;
+        function moda():integer;
+        function promedio():real;
+        procedure fibonacci(n:integer);
     end;
 
 implementation
@@ -357,9 +361,9 @@ begin
   begin
     for j:=1 to dim-i do
     begin
-      freqJ  := frec(elem[j]);
-      freqJ1 := frec(elem[j+1]);
-      if (freqJ < freqJ1) or ((freqJ=freqJ1)and(elem[j]>elem[j+1]))then
+      freqJ:=frec(elem[j]);
+      freqJ1:=frec(elem[j+1]);
+      if (freqJ<freqJ1)or((freqJ=freqJ1)and(elem[j]>elem[j+1]))then
       begin
         intercambio(j,j+1);
       end;
@@ -381,6 +385,95 @@ begin
   end;
   s:=s+']';
   Result:=s;
+end;
+
+function TVector.escapicua(): boolean;
+var
+  i:integer;
+  b:boolean;
+begin
+  b:=true;
+  i:=1;
+  while(i<=dim div 2)and b do
+  begin
+   if elem[i]<>elem[dim-i+1] then
+    b:=false
+   else
+    inc(i);
+  end;
+  result:=b;
+end;
+
+function TVector.moda(): integer;
+var
+  i,maxf,elemod,frea:integer;
+begin
+  if dim>0 then
+  begin
+    maxf:=0;
+    elemod:=elem[1];
+    for i:=1 to dim do
+    begin
+     frea:=frec(elem[i]);
+     if frea>maxf then
+     begin
+       maxf:=frea;
+       elemod:=elem[i];
+     end;
+    end;
+    result:=elemod;
+  end
+  else
+  begin
+   ShowMessage('vector vacio');
+   result:=-1;
+  end;
+end;
+
+function TVector.promedio(): real;
+var
+  i:integer;
+  s:real;
+begin
+  if dim>0 then
+  begin
+    s:=0;
+    for i:=1 to dim do
+    begin
+     s:=s+elem[i];
+    end;
+    result:=s/dim;
+  end
+ else
+ begin
+  ShowMessage('vector vacio');
+  result:=-1;
+ end;
+end;
+
+procedure TVector.fibonacci(n: integer);
+var
+  i,a,b,c:integer;
+begin
+ if(n>=1)and(n<=MAX)then
+ begin
+   dim:=0;
+   if n>=1 then
+   addelem(0);
+   if n>=2 then
+   addelem(1);
+   a:=0;
+   b:=1;
+   for i:=3 to n do
+   begin
+    c:=a+b;
+    addelem(c);
+    a:=b;
+    b:=c;
+   end;
+ end
+ else
+  ShowMessage('dimencion fuera de rango');
 end;
 
 end.
